@@ -1,4 +1,4 @@
-<x-layouts.main title="Index page">
+<x-layouts.main title="Создание и продвижение сайтов в Чебоксарах от Alex-art21">
     <div id="app">
         <style>
             @keyframes dash {
