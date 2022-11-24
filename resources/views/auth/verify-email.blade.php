@@ -5,12 +5,12 @@
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+            {{ __('Прежде чем продолжить, подтвердите свой адрес электронной почты, перейдя по ссылке, которую мы отправили вам по электронной почте. Если вы не получили электронное письмо,мы отправим Вам другое.') }}
         </div>
 
         @if (session('status') == 'verification-link-sent')
             <div class="mb-4 font-medium text-sm text-green-600">
-                {{ __('A new verification link has been sent to the email address you provided in your profile settings.') }}
+                {{ __('На адрес электронной почты, указанный в настройках профиля, отправлена новая ссылка для подтверждения.') }}
             </div>
         @endif
 
@@ -20,7 +20,7 @@
 
                 <div>
                     <x-jet-button type="submit">
-                        {{ __('Resend Verification Email') }}
+                        {{ __('Отправить повторно') }}
                     </x-jet-button>
                 </div>
             </form>
@@ -30,13 +30,13 @@
                     href="{{ route('profile.show') }}"
                     class="underline text-sm text-gray-600 hover:text-gray-900"
                 >
-                    {{ __('Edit Profile') }}</a>
+                    {{ __('Редактировать профиль') }}</a>
 
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
 
                     <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 ml-2">
-                        {{ __('Log Out') }}
+                        {{ __('Выйти') }}
                     </button>
                 </form>
             </div>

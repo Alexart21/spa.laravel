@@ -28,7 +28,7 @@
     'resources/css/app.css',
     'resources/css/styles.css',
     ])-->
-    <script src="https://www.google.com/recaptcha/api.js?render=6LftRl0aAAAAAHJDSCKdThCy1TaS9OwaGNPSgWyC"></script>
+{{--    <script src="https://www.google.com/recaptcha/api.js?render=6LftRl0aAAAAAHJDSCKdThCy1TaS9OwaGNPSgWyC"></script>--}}
 <body>
 {{ $slot }}
 <!--@vite([
