@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\CallsController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/mail', [ PostsController::class, 'store' ])->name('mail.store');
 Route::post('/zvonok', [ CallsController::class, 'store' ])->name('zvonok.store');
+
+Route::post('/test', [ TestController::class, 'test' ]);
 
 //Route::post('/mail/info', [ PostsController::class, 'info' ])->name('post.info');
 //Route::post('/zvonok/info', [ CallsController::class, 'info' ])->name('zvonok.info');

@@ -65,7 +65,6 @@ class IndexFormRequest extends FormRequest
             ->json([ 'success' => false, 'errors' => $validator->errors()], 422);
 
         throw (new ValidationException($validator, $response))
-            ->errorBag($this->errorBag)
-            ->redirectTo($this->getRedirectUrl());
+            ->errorBag($this->errorBag);
     }
 }
