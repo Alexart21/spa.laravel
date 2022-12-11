@@ -25,6 +25,7 @@ Route::post('/mail', [ PostsController::class, 'store' ])->name('mail.store');
 Route::post('/zvonok', [ CallsController::class, 'store' ])->name('zvonok.store');
 
 Route::post('/test', [ TestController::class, 'test' ]);
+Route::post('/upload', [ TestController::class, 'upload' ]);
 
 //Route::post('/mail/info', [ PostsController::class, 'info' ])->name('post.info');
 //Route::post('/zvonok/info', [ CallsController::class, 'info' ])->name('zvonok.info');

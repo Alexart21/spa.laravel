@@ -7,7 +7,7 @@ use App\Http\Controllers\OAuth\OauthController;
 use App\Http\Controllers\ApiController;
 
 Route::get('/', [ ContentController::class, 'index' ])->name('content.index');
-Route::get('/{page}', [ ContentController::class, 'index' ])->whereIn('page', ['sozdanie', 'prodvijenie', 'portfolio', 'parsing', 'scroll', 'address', 'test']);
+Route::get('/{page}', [ ContentController::class, 'index' ])->whereIn('page', ['sozdanie', 'prodvijenie', 'portfolio', 'parsing', 'scroll', 'address', 'test', 'dragdrop']);
 
 Route::get('/user', [ ContentController::class, 'user' ])->name('content.user');
 Route::get('/csrf', [ ContentController::class, 'csrf' ])->name('content.csrf');

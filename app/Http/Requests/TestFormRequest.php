@@ -24,6 +24,12 @@ class TestFormRequest  extends FormRequest
                 'regex:/^[А-ЯЁа-яё]+\s*/',
             ],
             'age' => 'required|integer|min:18|max:80',
+            'avatar_img' => [
+                'file',
+                'image',
+                'mimes:jpg,png',
+                'max:200'
+            ],
         ];
     }
 
@@ -34,10 +40,15 @@ class TestFormRequest  extends FormRequest
             'name.max' => 'не более 8 букв...',
             'name.required' => 'Имя обязательно',
             'name.regex' => 'пишите кирилицей!',
+
             'age.min' => 'Вам нет 18',
             'age.max' => 'Старперам тут не место',
             'age.required' => 'Укажите возраст',
             'age.integer' => 'Пишите цифирьками...',
+
+            'avatar_img.max' => 'Не более 200 кб',
+            'avatar_img.image' => 'Только файлы изображений',
+            'avatar_img.mimes' => 'Допустимые типы jpg,png',
         ];
     }
 
