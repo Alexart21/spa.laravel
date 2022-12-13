@@ -1,5 +1,5 @@
 <x-layouts.main title="Создание и продвижение сайтов в Чебоксарах от Alex-art21">
-    <div id="app">
+<div id="app">
         <style>
             @keyframes dash {
                 to {

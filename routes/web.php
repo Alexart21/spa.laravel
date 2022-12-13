@@ -5,9 +5,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\OAuth\OauthController;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\TestController;
+
+Route::post('/test', [ TestController::class, 'test' ]);
+Route::post('/upload', [ TestController::class, 'upload' ]);
+Route::get('/images', [ TestController::class, 'images' ]);
+Route::post('/remove', [ TestController::class, 'remove' ]);
 
 Route::get('/', [ ContentController::class, 'index' ])->name('content.index');
-Route::get('/{page}', [ ContentController::class, 'index' ])->whereIn('page', ['sozdanie', 'prodvijenie', 'portfolio', 'parsing', 'scroll', 'address', 'test', 'dragdrop']);
+Route::get('/{page}', [ ContentController::class, 'index' ])->whereIn('page', ['sozdanie', 'prodvijenie', 'portfolio', 'parsing', 'scroll', 'address', 'test', 'dragdrop', 'photo']);
 
 Route::get('/user', [ ContentController::class, 'user' ])->name('content.user');
 Route::get('/csrf', [ ContentController::class, 'csrf' ])->name('content.csrf');

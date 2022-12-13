@@ -1,8 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 use App\Http\Requests\TestFormRequest;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Validator;
+use App\Models\Photo;
+use Illuminate\Http\UploadedFile;
 
 
 class TestController extends Controller
@@ -22,16 +26,70 @@ class TestController extends Controller
     }
 
     public function upload(Request $request){
-        $path = [];
+        $request->validate([
+            'images' => 'array',
+            'images.*' => 'file|image|mimes:jpg,jpeg,png|max:2000',
+        ]);
+
+        //
+        $links = [];
         if($request->images){
             foreach ($request->images as $img) {
-               $path[] = $img->store('public/avatars');
+               $hash = hash_file('sha1', $img->path());
+//               dd($hash);
+               // проверка по хеш суммам нет ли уже такого файла
+               if(!Photo::where('hash_sum', $hash)->count()){
+                   $path = $img->store('public/photos');
+                   $link = str_replace('public', 'storage', $path);
+                   $photo = new Photo();
+                   $photo->hash_sum = $hash;
+                   $photo->path = $link;
+                   $photo->save();
+                   $links[] = $link;
+               }
+
             }
         }
         return response()->json([
             'success' => true,
-            'avatar' => $path,
+            'avatar' => $links,
         ]);
+    }
+
+    public function images()
+    {
+      $data = Photo::orderByDesc('created_at')->paginate(2);
+      if ($data){
+          return response()->json([
+              'success' => true,
+              'all' => $data,
+          ]);
+      }
+        return response()->json([
+            'success' => true,
+            'all' => null,
+        ]);
+    }
+
+    public function remove(Request $request)
+    {
+        $id = $request->id;
+        $img = Photo::findOrFail($id);
+        $path = $img->path;
+        $path = str_replace('storage', 'public', $path);
+        $deleteFile = Storage::delete($path);
+        $deletedRows = $img->delete();
+
+        if($deleteFile && $deletedRows){
+            return response()->json([
+                'success' => true,
+                'deletedId' => $id,
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+            ]);
+        }
     }
 
 }
