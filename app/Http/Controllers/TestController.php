@@ -92,4 +92,25 @@ class TestController extends Controller
         }
     }
 
+    public function crop(Request $request)
+    {
+//        dd($request->cropped_img);
+        $request->validate([
+            'cropped_img' => 'required',
+        ]);
+
+
+        $path = $request->file('cropped_img')->store('public/photos');
+        $hash = hash_file('sha1', $request->file('cropped_img'));
+        $link = str_replace('public', 'storage', $path);
+        $photo = new Photo();
+        $photo->hash_sum = $hash;
+        $photo->path = $link;
+        $photo->save();
+        return response()->json([
+            'success' => true,
+            'photo' => $link,
+        ]);
+    }
+
 }
