@@ -1,38 +1,169 @@
 <x-layouts.main title="Создание и продвижение сайтов в Чебоксарах от Alex-art21">
-<div id="app">
-        <style>
-            @keyframes dash {
-                to {
-                    stroke-dashoffset: 136;
-                }
+    <style>
+        .preloader {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: +2000;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .preloader .container-fluid {
+            padding-left: 0;
+            padding-right: 0;
+            padding-bottom: 0;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 1450px;
+            max-height: 700px;
+        }
+
+        .spinner {
+            top: 50%;
+            left: 50%;
+            z-index: 1;
+            height: 30px;
+            width: 30px;
+            margin-left: -15px;
+            margin-top: -40px;
+
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+
+            position: relative;
+        }
+
+        .spinner span {
+            width: 30px;
+            height: 30px;
+            border-radius: 30px;
+            display: block;
+            position: absolute;
+            opacity: 0.7;
+        }
+
+        .spinner .ball-1 {
+            z-index: 4;
+            background-color: #815731;
+            left: -20px;
+            -webkit-transform: translate(50%, 50%) scale(0.5);
+            -webkit-animation: animateSway 2s infinite ease-in-out, animateScale 2s infinite ease-in-out;
+            animation: animateSway 2s infinite ease-in-out, animateScale 2s infinite ease-in-out;
+        }
+
+        .spinner .ball-2 {
+            z-index: 3;
+            background-color: #323232;
+            left: -20px;
+            -webkit-transform: translate(50%, 50%) scale(0.5);
+            -webkit-animation: animateSway 2s infinite ease-in-out 500ms, animateScale 2s infinite ease-in-out 500ms;
+            animation: animateSway 2s infinite ease-in-out 500ms, animateScale 2s infinite ease-in-out 500ms;
+        }
+
+        .spinner .ball-3 {
+            z-index: 2;
+            background-color: #d0701f;
+            left: -20px;
+            -webkit-transform: translate(50%, 50%) scale(0.5);
+            -webkit-animation: animateSway 2s infinite ease-in-out 1s, animateScale 2s infinite ease-in-out 1s;
+            animation: animateSway 2s infinite ease-in-out 1s, animateScale 2s infinite ease-in-out 1s;
+        }
+
+        .spinner .ball-4 {
+            z-index: 1;
+            background-color: #d0511f;
+            left: -20px;
+            -webkit-transform: translate(50%, 50%) scale(0.5);
+            -webkit-animation: animateSway 2s infinite ease-in-out 1.5s, animateScale 2s infinite ease-in-out 1.5s;
+            animation: animateSway 2s infinite ease-in-out 1.5s, animateScale 2s infinite ease-in-out 1.5s;
+        }
+
+        @-webkit-keyframes animateSway {
+            0% {
+                left: -20px
             }
-            @keyframes rotate {
-                100% {
-                    transform: rotate(360deg);
-                }
+            50% {
+                left: 20px
             }
-        </style>
-        <svg
-            width="100px"
-            height="100px"
-            style="
-          position: absolute;
-          left: calc(50% - 50px);
-          top: calc(50% - 50px);
-        "
-            viewBox="-3 -4 39 39"
-        >
-            <polygon
-                style="
-            stroke-dasharray: 17;
-            animation: dash 2.5s cubic-bezier(0.35, 0.04, 0.63, 0.95) infinite;
-          "
-                fill="#ffffff"
-                stroke="#ff0000"
-                stroke-width="1"
-                points="16,0 32,32 0,32"
-            ></polygon>
-        </svg>
+            100% {
+                left: -20px
+            }
+        }
+
+        @keyframes animateSway {
+            0% {
+                left: -20px
+            }
+            50% {
+                left: 20px
+            }
+            100% {
+                left: -20px
+            }
+        }
+
+        @-webkit-keyframes animateScale {
+            0% {
+                -webkit-transform: translate(50%, 50%) scale(0.5);
+                z-index: -1
+            }
+            25% {
+                -webkit-transform: translate(50%, 50%) scale(1);
+                z-index: +1
+            }
+            50% {
+                -webkit-transform: translate(50%, 50%) scale(0.5);
+                z-index: -1
+            }
+            75% {
+                -webkit-transform: translate(50%, 50%) scale(0.25);
+                z-index: -2
+            }
+            100% {
+                -webkit-transform: translate(50%, 50%) scale(0.5);
+                z-index: -1
+            }
+        }
+
+        @keyframes animateScale {
+            0% {
+                transform: translate(50%, 50%) scale(0.5);
+                z-index: -1
+            }
+            25% {
+                transform: translate(50%, 50%) scale(1);
+                z-index: +1
+            }
+            50% {
+                transform: translate(50%, 50%) scale(0.5);
+                z-index: -1
+            }
+            75% {
+                transform: translate(50%, 50%) scale(0.25);
+                z-index: -2
+            }
+            100% {
+                transform: translate(50%, 50%) scale(0.5);
+                z-index: -1
+            }
+        }
+    </style>
+    <div id="app">
+        <div class="preloader">
+            <div class="container-fluid">
+                <div class="spinner">
+                    <span class="ball-1"></span>
+                    <span class="ball-2"></span>
+                    <span class="ball-3"></span>
+                    <span class="ball-4"></span>
+                </div>
+            </div>
+        </div>
     </div>
 </x-layouts.main>
 
