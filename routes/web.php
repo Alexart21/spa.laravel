@@ -13,7 +13,11 @@ Route::post('/test', [ TestController::class, 'test' ]);
 Route::post('/upload', [ TestController::class, 'upload' ]);
 Route::get('/images', [ TestController::class, 'images' ]);
 Route::post('/remove', [ TestController::class, 'remove' ]);
-Route::post('/crop', [ TestController::class, 'crop' ]);
+
+// можешь все закрыть аутентификацией
+Route::middleware('auth')->group(function () {
+    Route::post('/crop', [ TestController::class, 'crop' ]);
+});
 
 Route::post('/mail', [ PostsController::class, 'store' ])->name('mail.store');
 Route::post('/zvonok', [ CallsController::class, 'store' ])->name('zvonok.store');

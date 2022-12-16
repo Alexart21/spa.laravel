@@ -96,7 +96,7 @@ class TestController extends Controller
     {
 //        dd($request->cropped_img);
         $request->validate([
-            'cropped_img' => 'required',
+            'cropped_img' => 'required|file|image|mimes:png|max:200',
         ]);
 
 
