@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Http\Requests\TestFormRequest;
+use App\Http\Requests\PhotoRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -25,10 +26,15 @@ class TestController extends Controller
         ]);
     }
 
+    // здесь мультизагрузка файлов
     public function upload(Request $request){
+        if(count($request->images) > 10){
+            return  response()
+                ->json([ 'success' => false, 'message' => 'Не более 10 файлов.Каждый не более 200 кБ'], 422);
+        }
         $request->validate([
             'images' => 'array',
-            'images.*' => 'file|image|mimes:jpg,jpeg,png|max:2000',
+            'images.*' => 'file|image|mimes:jpg,jpeg,png|max:200',
         ]);
 
         //
@@ -77,9 +83,10 @@ class TestController extends Controller
         $img = Photo::findOrFail($id);
         $path = $img->path;
         $path = str_replace('storage', 'public', $path);
+        // файл
         $deleteFile = Storage::delete($path);
+        // запись из базы
         $deletedRows = $img->delete();
-
         if($deleteFile && $deletedRows){
             return response()->json([
                 'success' => true,
