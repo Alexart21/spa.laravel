@@ -28,7 +28,8 @@ class IndexFormRequest extends FormRequest
     {
         return [
             'reCaptcha' => ['required', new ReCaptchaV3],
-            'name' => 'required|min:2|max:128',
+            // регулярка только кириллица пробел и дефис
+            'name' => 'required|min:2|max:128|regex:/^[А-Яа-яё -]*$/ui',
             'email' => 'required|email',
             'tel' => 'min:6|max:20',
             'body' => 'required|min:2|max:10000',
@@ -51,6 +52,7 @@ class IndexFormRequest extends FormRequest
             'reCaptcha.required' => 'Отсутствует параметр reCaptcha',
             'name.required' => 'Укажите имя',
             'name.min' => '2 буквы хотя бы...',
+            'name.regex' => 'Только кириллица без цифр и спецсимволов!',
             'tel.min' => '6 цифр хотя бы...',
             'tel.max' => 'много цифр...',
             'body.required' => 'Напишите что нибудь :)',
