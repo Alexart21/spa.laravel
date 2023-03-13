@@ -4,6 +4,8 @@ use App\Http\Requests\TestFormRequest;
 use App\Http\Requests\PhotoRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use App\Http\Requests\FileUploads;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Validator;
 use App\Models\Photo;
@@ -39,20 +41,22 @@ class TestController extends Controller
 
         //
         $links = [];
+        $user_id = Auth::user()->id;
         if($request->images){
             foreach ($request->images as $img) {
-               $hash = hash_file('sha1', $img->path());
+                $hash = hash_file('sha1', $img->path());
 //               dd($hash);
-               // проверка по хеш суммам нет ли уже такого файла
-               if(!Photo::where('hash_sum', $hash)->count()){
-                   $path = $img->store('public/photos');
-                   $link = str_replace('public', 'storage', $path);
-                   $photo = new Photo();
-                   $photo->hash_sum = $hash;
-                   $photo->path = $link;
-                   $photo->save();
-                   $links[] = $link;
-               }
+                // проверка по хеш суммам нет ли уже такого файла
+                if(!Photo::where('hash_sum', $hash)->count()){
+                    $path = $img->store('public/photos');
+                    $link = str_replace('public', 'storage', $path);
+                    $photo = new Photo();
+                    $photo->hash_sum = $hash;
+                    $photo->path = $link;
+                    $photo->user_id = $user_id;
+                    $photo->save();
+                    $links[] = $link;
+                }
 
             }
         }
@@ -85,6 +89,12 @@ class TestController extends Controller
         $path = str_replace('storage', 'public', $path);
         // файл
         $deleteFile = Storage::delete($path);
+        // папка
+        $directory = 'public/photos/usr_' . $img->user_id;
+        // папка пуста удаляем и ее
+        if(!Storage::allFiles($directory)){
+            Storage::deleteDirectory($directory);
+        }
         // запись из базы
         $deletedRows = $img->delete();
         if($deleteFile && $deletedRows){

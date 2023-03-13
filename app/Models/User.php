@@ -37,13 +37,6 @@ class User extends Authenticatable
         'google_id',
     ];*/
 
-    public function oauth()
-    {
-        // реализация связи один к одному
-        // в таблице куда ссылается hasOne(а это у нас oauth) должно быть поле user_id
-        return $this->hasOne(Oauth::class);
-    }
-
     /*public function sendEmailVerificationNotification()
     {
 //        die('kjkjkjkj');
@@ -81,5 +74,17 @@ class User extends Authenticatable
 
     public function roles(){
         return $this->belongsToMany(Role::class);
+    }
+
+    public function oauth()
+    {
+        // реализация связи один к одному
+        // в таблице куда ссылается hasOne(а это у нас oauth) должно быть поле user_id
+        return $this->hasOne(Oauth::class);
+    }
+
+    public function photos()
+    {
+        return $this->hasMany(Photo::class);
     }
 }
