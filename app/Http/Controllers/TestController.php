@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Validator;
 use App\Models\Photo;
 use Illuminate\Http\UploadedFile;
+use function PHPUnit\Framework\fileExists;
 
 
 class TestController extends Controller
@@ -29,23 +30,13 @@ class TestController extends Controller
     }
 
     // здесь мультизагрузка файлов
-    public function upload(Request $request){
-        if(count($request->images) > 10){
-            return  response()
-                ->json([ 'success' => false, 'message' => 'Не более 10 файлов.Каждый не более 200 кБ'], 422);
-        }
-        $request->validate([
-            'images' => 'array',
-            'images.*' => 'file|image|mimes:jpg,jpeg,png|max:200',
-        ]);
+    public function upload(FileUploads $request){
 
-        //
         $links = [];
         $user_id = Auth::user()->id;
         if($request->images){
             foreach ($request->images as $img) {
                 $hash = hash_file('sha1', $img->path());
-//               dd($hash);
                 // проверка по хеш суммам нет ли уже такого файла
                 if(!Photo::where('hash_sum', $hash)->count()){
                     $path = $img->store('public/photos');
@@ -68,13 +59,13 @@ class TestController extends Controller
 
     public function images()
     {
-      $data = Photo::orderByDesc('created_at')->paginate(2);
-      if ($data){
-          return response()->json([
-              'success' => true,
-              'all' => $data,
-          ]);
-      }
+        $data = Photo::orderByDesc('created_at')->paginate(2);
+        if ($data){
+            return response()->json([
+                'success' => true,
+                'all' => $data,
+            ]);
+        }
         return response()->json([
             'success' => true,
             'all' => null,
@@ -89,12 +80,6 @@ class TestController extends Controller
         $path = str_replace('storage', 'public', $path);
         // файл
         $deleteFile = Storage::delete($path);
-        // папка
-        $directory = 'public/photos/usr_' . $img->user_id;
-        // папка пуста удаляем и ее
-        if(!Storage::allFiles($directory)){
-            Storage::deleteDirectory($directory);
-        }
         // запись из базы
         $deletedRows = $img->delete();
         if($deleteFile && $deletedRows){

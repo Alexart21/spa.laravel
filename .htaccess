@@ -4,6 +4,7 @@
 #php_value date.timezone 'Europe/Moscow'
 # Без этого google reCapcha не хочит
 #php_flag allow_url_fopen on
+Options FollowSymLinks
 
 RewriteEngine on
 # redirect from https://

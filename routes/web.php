@@ -12,23 +12,6 @@ use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 
-/*
-Route::get('storage/{filename}', function ($filename)
-{
-    $path = __DIR__ . '/../storage/app/public/' . $filename;
-
-    if (!File::exists($path)) {
-        abort(404);
-    }
-
-    $file = File::get($path);
-    $type = File::mimeType($path);
-
-    $response = Response::make($file, 200);
-    $response->header("Content-Type", $type);
-
-    return $response;
-});*/
 
 Route::post('/test', [ TestController::class, 'test' ]);
 Route::post('/upload', [ TestController::class, 'upload' ]);
@@ -51,7 +34,7 @@ Route::get('/{page}', [ ContentController::class, 'index' ])->whereIn('page', ['
 
 Route::get('/user', [ ContentController::class, 'user' ])->name('content.user');
 Route::get('/csrf', [ ContentController::class, 'csrf' ])->name('content.csrf');
-Route::get('/inf', [ ApiController::class, 'inf' ]);
+Route::middleware('auth')->post('/inf', [ ApiController::class, 'inf' ]);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

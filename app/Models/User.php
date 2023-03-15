@@ -8,7 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
 // когда имплементируем MustVerifyEmail то при OAuth при удачной авторизации перебрасывает на страницу с сообщением
@@ -16,12 +18,12 @@ use Illuminate\Support\Facades\Auth;
 // что не есть god надо найти этот редирект и как то пофиксить
 
 //class User extends Authenticatable implements MustVerifyEmail
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
-    use TwoFactorAuthenticatable;
+    use HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -30,23 +32,6 @@ class User extends Authenticatable
      */
     protected $guarded = [];
 
-    /*protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'google_id',
-    ];*/
-
-    /*public function sendEmailVerificationNotification()
-    {
-//        die('kjkjkjkj');
-    }*/
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -54,20 +39,11 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
+
     protected $appends = [
         'profile_photo_url',
     ];
@@ -86,5 +62,20 @@ class User extends Authenticatable
     public function photos()
     {
         return $this->hasMany(Photo::class);
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
