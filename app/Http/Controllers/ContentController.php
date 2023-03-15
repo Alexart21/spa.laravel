@@ -24,10 +24,6 @@ class ContentController extends Controller
     {
         $user = Auth::user();
         if($user){
-            //
-            auth()->setDefaultDriver('api'); // ВОТ без этой строчки не работала api&&web аутентификация !!!!
-            $token = auth()->login($user);
-            //
             if($user->avatar){
                 $avatar = $user->avatar;
             }elseif ($user->profile_photo_path){
@@ -41,11 +37,24 @@ class ContentController extends Controller
                 'email' => $user->email,
                 'status' => 10,
                 'avatarPath' => $avatar,
-                'token' => $token
             ]);
         }else{
             return response()->json(['isGuest' => true]);
         }
-
     }
+
+    public function token()
+    {
+        $user = Auth::user();
+        if($user){
+            auth()->setDefaultDriver('api'); // ВОТ без этой строчки не работала api&&web аутентификация !!!!
+            $token = auth()->login($user);
+            return response()->json([
+                'token' => $token
+            ]);
+        }else{
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+    }
+
 }
