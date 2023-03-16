@@ -4,7 +4,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\OAuth\OauthController;
-use App\Http\Controllers\ApiController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\CallsController;
