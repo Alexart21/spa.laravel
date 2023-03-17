@@ -43,7 +43,8 @@ class TestController extends Controller
                     $link = str_replace('public', 'storage', $path);
                     $photo = new Photo();
                     $photo->hash_sum = $hash;
-                    $photo->path = $link;
+                    $photo->path = $path;
+                    $photo->link = $link;
                     $photo->user_id = $user_id;
                     $photo->save();
                     $links[] = $link;
@@ -77,7 +78,6 @@ class TestController extends Controller
         $id = $request->id;
         $img = Photo::findOrFail($id);
         $path = $img->path;
-        $path = str_replace('storage', 'public', $path);
         // файл
         $deleteFile = Storage::delete($path);
         // запись из базы
