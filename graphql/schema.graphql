@@ -1,0 +1,21 @@
+type User {
+  id: ID!
+  name: String!
+  email: String!
+}
+type Query {
+  user(id: ID! @eq): User @find
+  users: [User!]! @all
+}
+
+
+input RegisterData {
+    email: String
+    name: String
+    password: String
+}
+
+type Mutation {
+ login(data: RegisterData): User @create
+}
+

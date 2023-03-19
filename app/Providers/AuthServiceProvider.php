@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -29,5 +30,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 //        Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
         //
+        /*if (! $this->app->routesAreCached()) {
+            Passport::routes();
+        }*/
     }
 }
