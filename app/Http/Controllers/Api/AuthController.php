@@ -20,11 +20,6 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'registration']]);
     }
 
-    public function test()
-    {
-        return response()->json(['here' => 'here']);
-    }
-
     /**
      * Get a JWT via given credentials.
      *
@@ -39,61 +34,13 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    /*public function me()
-    {
-        return response()->json(auth()->user());
-    }*/
 
-    public function user()
-    {
-        die('here');
-        $user = Auth::user();
-        if($user){
-            $token = auth()->tokenById($user->id);
-            //
-            if($user->avatar){
-                $avatar = $user->avatar;
-            }elseif ($user->profile_photo_path){
-                $avatar = 'storage/' . $user->profile_photo_path;
-            }else{
-                $avatar = 'img/no-image.png';
-            }
-            return response()->json([
-                'isGuest' => false,
-                'username' => $user->name,
-                'email' => $user->email,
-                'status' => 10,
-                'avatarPath' => $avatar,
-                'token' => $token
-            ]);
-        }else{
-            return response()->json(['isGuest' => true]);
-        }
-
-    }
-
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function logout()
     {
         auth()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
     }
-
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function refresh()
     {
         return $this->respondWithToken(auth()->refresh());

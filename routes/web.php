@@ -8,6 +8,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\CallsController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 
@@ -31,10 +32,8 @@ Route::post('/zvonok', [ CallsController::class, 'store' ])->name('zvonok.store'
 Route::get('/', [ ContentController::class, 'index' ])->name('content.index');
 Route::get('/{page}', [ ContentController::class, 'index' ])->whereIn('page', ['sozdanie', 'prodvijenie', 'portfolio', 'parsing', 'location', 'scroll', 'address', 'test', 'dragdrop', 'photo', 'cropper', 'chat']);
 
-Route::post('/user', [ ContentController::class, 'user' ])->name('content.user');
-Route::post('/token', [ ContentController::class, 'token' ])->name('content.token');
-// Route::get('/csrf', [ ContentController::class, 'csrf' ])->name('content.csrf');
-//Route::middleware('auth')->post('/inf', [ ApiController::class, 'inf' ]);
+Route::post('/user', [ UserController::class, 'user' ])->name('content.user');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

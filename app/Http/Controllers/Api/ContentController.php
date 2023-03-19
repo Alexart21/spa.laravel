@@ -11,7 +11,7 @@ class ContentController extends Controller
     public function __construct()
     {
         auth()->setDefaultDriver('api'); // ВОТ без этой строчки не работала api&&web аутентификация !!!!
-        $this->middleware('auth:api', ['except' => ['login', 'registration']]);
+//        $this->middleware('auth:api', ['except' => ['login', 'registration']]);
     }
 
 
@@ -40,5 +40,15 @@ class ContentController extends Controller
         }else{
             return response()->json(['success' => false]);
         }
+    }
+
+    public function test()
+    {
+        return response()->json(
+            [
+                'success' => true,
+                'data' => 'bla',
+            ]
+        );
     }
 }
