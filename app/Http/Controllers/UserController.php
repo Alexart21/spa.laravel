@@ -10,8 +10,9 @@ class UserController extends Controller
     {
         $user = Auth::user();
         if($user){
-            auth()->setDefaultDriver('api'); // ВОТ без этой строчки не работала api&&web аутентификация !!!!
-            $token = auth()->login($user);
+//            auth()->setDefaultDriver('api'); // ВОТ без этой строчки не работала api&&web аутентификация !!!!
+            // или так указав 'api'
+            $token = auth('api')->setTTL(1)->login($user);
             if($user->avatar){
                 $avatar = $user->avatar;
             }elseif ($user->profile_photo_path){

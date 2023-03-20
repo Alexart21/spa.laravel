@@ -9,11 +9,15 @@ use App\Http\Controllers\Api\ContentController;
 
 Route::group([
     'prefix' => 'auth',
-    'middleware' => 'auth:api'
 ], function () {
-        Route::post('refresh', [ AuthController::class, 'refresh' ]);
-        Route::post('/countrys', [ ContentController::class, 'countrys' ]);
-        Route::post('/test', [ ContentController::class, 'test' ]);
+    // здесь рефреш по старому токену
+    // как такового рефреш токена нет
+    Route::post('/refresh', [ AuthController::class, 'refresh' ]);
+        // сюда только по действующему jwt токену
+        Route::group(['middleware' => 'auth:api'], function (){
+            Route::post('/countrys', [ ContentController::class, 'countrys' ]);
+            Route::post('/test', [ ContentController::class, 'test' ]);
+        });
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

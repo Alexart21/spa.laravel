@@ -17,7 +17,7 @@ class AuthController extends Controller
     public function __construct()
     {
         auth()->setDefaultDriver('api'); // ВОТ без этой строчки не работала api&&web аутентификация !!!!
-        $this->middleware('auth:api', ['except' => ['login', 'registration']]);
+//        $this->middleware('auth:api', ['except' => ['login', 'registration']]);
     }
 
     /**
