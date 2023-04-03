@@ -18,6 +18,11 @@ Route::group([
             Route::post('/countrys', [ ContentController::class, 'countrys' ]);
             Route::post('/test', [ ContentController::class, 'test' ]);
         });
+        // здесь добавлен RateLimit
+        /*Route::group(['middleware' => ['auth:api', 'throttle:formsLimit']], function (){
+            Route::post('/countrys', [ ContentController::class, 'countrys' ]);
+            Route::post('/test', [ ContentController::class, 'test' ]);
+        });*/
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Http\Request;
+use Illuminate\Cache\RateLimiting\Limit;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        RateLimiter::for('formsLimit', function (Request $request) {
+            return Limit::perMinute(config('app.all_forms_rate_limit'))->by($request->ip());
+        });
     }
 }

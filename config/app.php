@@ -16,7 +16,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-
+    'all_forms_rate_limit' => env('All_FORMS_RATE_LIMIT', 10),
     /*
     |--------------------------------------------------------------------------
     | Application Environment

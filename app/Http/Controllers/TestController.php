@@ -100,18 +100,18 @@ class TestController extends Controller
         $request->validate([
             'cropped_img' => 'required|file|image|mimes:png|max:200',
         ]);
-
-
+        $user_id = Auth::user()->id;
         $path = $request->file('cropped_img')->store('public/photos');
         $hash = hash_file('sha1', $request->file('cropped_img'));
         $link = str_replace('public', 'storage', $path);
         $photo = new Photo();
         $photo->hash_sum = $hash;
-        $photo->path = $link;
+        $photo->path = $path;
+        $photo->link = $link;
+        $photo->user_id = $user_id;
         $photo->save();
         return response()->json([
             'success' => true,
-            'photo' => $link,
         ]);
     }
 

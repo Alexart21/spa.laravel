@@ -20,7 +20,7 @@
         "mll-lab/laravel-graphiql": "^1.2",
         "mll-lab/laravel-graphql-playground": "^2.6",
         "movemoveapp/laravel-dadata": "^1.0",
-        "nuwave/lighthouse": "^5.71",
+        "nuwave/lighthouse": "*",
         "predis/predis": "^2.0",
         "protonemedia/laravel-form-components": "^3.7",
         "socialiteproviders/github": "^4.1",
