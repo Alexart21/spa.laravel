@@ -27,11 +27,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/crop', [ TestController::class, 'crop' ]);
 });
 
+Route::get('/video_src', [ TestController::class, 'video' ]);
+
 Route::post('/mail', [ PostsController::class, 'store' ])->name('mail.store');
 Route::post('/zvonok', [ CallsController::class, 'store' ])->name('zvonok.store');
 
 Route::get('/', [ ContentController::class, 'index' ])->name('content.index');
-Route::get('/{page}', [ ContentController::class, 'index' ])->whereIn('page', ['sozdanie', 'prodvijenie', 'portfolio', 'parsing', 'location', 'scroll', 'address', 'test', 'dragdrop', 'photo', 'cropper', 'chat']);
+Route::get('/{page}', [ ContentController::class, 'index' ])->whereIn('page', ['sozdanie', 'prodvijenie', 'portfolio', 'parsing', 'location', 'scroll', 'address', 'test', 'dragdrop', 'photo', 'cropper', 'chat', 'video']);
 
 Route::post('/user', [ UserController::class, 'user' ])->name('content.user');
 

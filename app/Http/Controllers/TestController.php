@@ -11,6 +11,7 @@ use Illuminate\Validation\Validator;
 use App\Models\Photo;
 use Illuminate\Http\UploadedFile;
 use function PHPUnit\Framework\fileExists;
+use Iman\Streamer\VideoStreamer;
 
 
 class TestController extends Controller
@@ -113,6 +114,13 @@ class TestController extends Controller
         return response()->json([
             'success' => true,
         ]);
+    }
+
+    // stream
+    public function video()
+    {
+        $path = public_path('storage/files/_video.mp4');
+        VideoStreamer::streamFile($path);
     }
 
 }
